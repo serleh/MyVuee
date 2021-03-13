@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="lessons.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>Lesson</title>
+</head>
+<body>
+    <div id="root">
+        <header>
+            <h4 v-text="sitename"></h4>
+  
+        </header>
+        <button v-on:click="showCheckOut">{{cartCount}}
+            <i class="fas fa-cart-plus"></i>
+            Checkout
+        </button>
+        <main>
+            <div>
+                <img :src="product.image" alt="">
+            </div>
+            <h5 v-text="product.title"></h5>
+            <p v-text="product.description"></p>
+            <p>Spaces:{{product.spaces}}</p>
+            <p>proce:{{product.price}}</p>
+            <button v-on:click="addToCart" v-if="canAddToCart">Add To Cart</button>
+            <button disabled='disabled' v-else> Add To Cart</button>
+        </main>
+       
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script>
+         new Vue ({
+             computed:{
+                 cartCount:function(){
+                    return this.cart.length || '';
+                 },
+                 canAddToCart:function(){
+                     return this.product.spaces > this.cartCount;
+                 }
+
+             },
+             el:'#root',
+             data:{
+                 sitename:"Welcome To saleh's lectures Zone.",
+                product:{
+                    id:001,
+                    title:"Arabic language",
+                    description:"This lecture will guide you to speak arabic.",
+                    price:1000,
+                    spaces:5,
+                    image:"images/arabic.jpg"
+                   
+                },
+                showProduct:true,
+                cart:[]
+             },
+             methods:{
+                 addToCart: function(){
+                     this.cart.push(this.product.id)
+                 },
+                 showCheckOut(){
+                     this.showProduct = this.showProduct ? false : true;
+                 }
+                 
+             }
+         })
+    </script>
+</body>
+</html>
